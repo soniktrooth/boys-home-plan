@@ -18,6 +18,7 @@
   --accent:#0f6b5c; --accent-soft:#dcefe9; --sun:#f5c94a; --sun-ink:#4a3a00;
   --nana:#8a3f8f; --nana-soft:#f3e4f4; --kaleb:#1f5fa8; --kaleb-soft:#e1ecf9;
   --judah:#b4561c; --judah-soft:#fbe9dc;
+  --bin-green:#7cb342; --bin-green-ink:#1b2e05; --bin-red:#c62828;
   --display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
   --body:"Atkinson Hyperlegible", system-ui, -apple-system, sans-serif;
 }
@@ -34,7 +35,7 @@
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
-.wrap{max-width:680px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+.wrap{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
 h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;line-height:1.1}
 header{display:flex;flex-direction:column;gap:6px}
 .eyebrow{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
@@ -92,6 +93,40 @@ h1{font-size:clamp(30px,7vw,44px);font-weight:800;letter-spacing:-.01em}
 .dinnerrow .v{font-family:var(--display);font-size:20px;font-weight:700;color:var(--ink);line-height:1.2}
 .dinnerrow .v.none{font-family:var(--body);font-size:15px;font-weight:400;font-style:italic;color:var(--muted)}
 .chore.item{display:block;width:auto;padding:6px 10px;border-top:0;border-radius:8px;margin:6px 16px 0;background:var(--sun);color:var(--sun-ink);font-weight:700;font-size:14px}
+/* calendar */
+.calwrap{display:flex;flex-direction:column;gap:10px}
+.calhead{display:flex;justify-content:space-between;align-items:baseline;gap:8px 16px;flex-wrap:wrap}
+.calhead h2{font-size:22px;font-weight:800}
+.legend{display:flex;gap:6px 14px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:5px}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.wd{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:center;padding-bottom:2px}
+.cell{min-height:62px;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px;display:flex;flex-direction:column;gap:4px;text-align:left;font:inherit;color:inherit;cursor:pointer}
+.cell.out{background:transparent;border-style:dashed;cursor:default;color:var(--muted);opacity:.55}
+.cell.past{opacity:.6}
+.cell.today{border:2px solid var(--sun)}
+.cell.sel{box-shadow:inset 0 0 0 2px var(--accent);border-color:var(--accent)}
+.cell:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.cn{font-family:var(--display);font-weight:800;font-size:16px;line-height:1;font-variant-numeric:tabular-nums}
+.cell.today .cn{background:var(--sun);color:var(--sun-ink);border-radius:999px;min-width:24px;height:24px;display:inline-grid;place-items:center;align-self:flex-start;padding:0 4px}
+.full{display:none}
+.dots{display:flex;gap:3px;flex-wrap:wrap;margin-top:auto}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--muted)}
+.dot.meal{background:var(--accent)}.dot.Nana{background:var(--nana)}.dot.Kaleb{background:var(--kaleb)}.dot.bin{background:var(--sun)}
+.ev{font-size:12px;line-height:1.3;border-radius:6px;padding:3px 6px;background:var(--bg);overflow-wrap:anywhere}
+.ev b{display:block;font-variant-numeric:tabular-nums}
+.ev em{display:block;font-style:normal;font-weight:700;font-size:11px;opacity:.9}
+.ev em.nt{font-weight:400}
+.ev.Nana{background:var(--nana);color:var(--surface)}.ev.Kaleb{background:var(--kaleb);color:var(--surface)}
+.ev.bin{background:var(--sun);color:var(--sun-ink);font-weight:700}
+.ev.bin.green,.chore.item.green{background:var(--bin-green);color:var(--bin-green-ink)}
+.ev.bin.red,.chore.item.red{background:var(--bin-red);color:#fff}.dot.bin.red{background:var(--bin-red)}
+.dot.bin{border-radius:2px}.dot.bin.green{background:var(--bin-green)}
+.cdin{margin-top:auto;border-top:1px dashed var(--line);padding-top:4px;font-family:var(--display);font-weight:700;font-size:13px;line-height:1.2;color:var(--accent);overflow-wrap:anywhere}
+.cdin small{display:block;font-family:var(--body);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.cdin.none{color:var(--muted);font-weight:400;font-style:italic}
+.detail{max-width:680px;width:100%}
+@media (min-width:760px){.wrap:not(.editing) .detail{display:none}.cell{min-height:160px;padding:8px}.full{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0}.dots{display:none}.legend .dotonly{display:none}}
 .dinnerrow.item{border-top:0;border-radius:0;padding:10px 16px}
 .empty{color:var(--muted);font-size:14px;font-style:italic;padding:4px 0}
 .add{font:inherit;font-size:13px;color:var(--accent);background:none;border:1px dashed var(--accent);border-radius:8px;padding:4px 10px;cursor:pointer;align-self:start;margin-top:6px}
@@ -118,13 +153,12 @@ h1{font-size:clamp(30px,7vw,44px);font-weight:800;letter-spacing:-.01em}
 {"id":"m0b","date":"2026-11-06","kind":"meal","title":"Takeout after youth","start":"20:00"},
 {"id":"m1","date":"2026-11-09","kind":"meal","title":"Enchiladas"},
 {"id":"m2","date":"2026-11-10","kind":"meal","title":"Massaman & rice"},
-{"id":"a1","date":"2026-11-10","kind":"activity","title":"Dream Team party"},
+{"id":"a1","date":"2026-11-10","kind":"activity","title":"Dream Team party","start":"18:00"},
 {"id":"m3","date":"2026-11-11","kind":"meal","title":"Chicken pesto pasta"},
 {"id":"a2","date":"2026-11-11","kind":"activity","title":"Drama","who":"Judah","driver":"Kaleb","start":"16:30"},
 {"id":"m4","date":"2026-11-12","kind":"meal","title":"Butter chicken & rice"},
 {"id":"a3","date":"2026-11-12","kind":"activity","title":"Out for dinner","who":"Kaleb"},
 {"id":"m5","date":"2026-11-13","kind":"meal","title":"Takeout"},
-{"id":"c1","date":"2026-11-13","kind":"chore","title":"Bin day: yellow recycling bin"},
 {"id":"a4","date":"2026-11-13","kind":"activity","title":"Bytes","who":"Judah","driver":"Nana","start":"18:30","end":"21:00"},
 {"id":"m6","date":"2026-11-14","kind":"meal","title":"Thai curry & rice"},
 {"id":"a5","date":"2026-11-14","kind":"activity","title":"Bytes","who":"Judah","driver":"Kaleb","start":"15:00","end":"21:30"},
@@ -132,7 +166,12 @@ h1{font-size:clamp(30px,7vw,44px);font-weight:800;letter-spacing:-.01em}
 {"id":"a6","date":"2026-11-15","kind":"activity","title":"Bytes","who":"Judah","driver":"Kaleb","start":"17:00","end":"20:30"},
 {"id":"m8","date":"2026-11-16","kind":"meal","title":"Lasagne"},
 {"id":"m0c","date":"2026-11-07","kind":"meal","title":"Pizza night"},
-{"id":"a7","date":"2026-11-07","kind":"activity","title":"Work","who":"Judah","driver":"Nana","start":"12:00"}
+{"id":"a7","date":"2026-11-07","kind":"activity","title":"Work","who":"Judah","driver":"Nana","start":"12:00","note":"Bus home afterwards"},
+{"id":"c2","date":"2026-11-06","kind":"chore","title":"Red bin day"},
+{"id":"c3","date":"2026-11-13","kind":"chore","title":"Yellow bin day"},
+{"id":"c4","date":"2026-11-13","kind":"chore","title":"Red bin day"},
+{"id":"a8","date":"2026-11-08","kind":"activity","title":"Gym","who":"Judah","driver":"Kaleb","start":"07:00"},
+{"id":"a9","date":"2026-11-08","kind":"activity","title":"Bytes","who":"Judah","start":"09:30","note":"Walks over from the gym"}
 ]}</script>
 <script id="appjs">
 (function(){
@@ -140,7 +179,7 @@ const SKEL_HEAD='<!doctype html><html><head><meta charset=utf8><meta name=viewpo
 const SKEL_RESET=(document.head.querySelector('style')||{}).textContent||'';
 const SRC={css:document.getElementById('css').textContent, js:document.getElementById('appjs').textContent};
 let S=JSON.parse(document.getElementById('state').textContent);
-let editing=false, dirty=false, art=null, canEdit=false, panel=null, msg='';
+let selected=null, editing=false, dirty=false, art=null, canEdit=false, panel=null, msg='';
 const app=document.getElementById('app');
 const DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -151,6 +190,7 @@ function days(){const out=[];let d=new Date(S.tripStart+'T00:00:00Z');const e=ne
   while(d<=e){out.push(d.toISOString().slice(0,10));d=new Date(d.getTime()+864e5);}return out;}
 function parts(iso){const d=new Date(iso+'T00:00:00Z');return{dow:DOW[d.getUTCDay()],dn:d.getUTCDate(),mo:MON[d.getUTCMonth()]};}
 function fmt(t){if(!t)return'';let[h,m]=t.split(':').map(Number);const ap=h>=12?'pm':'am';h=h%12||12;return h+(m?':'+String(m).padStart(2,'0'):'')+ap;}
+const binc=i=>/red/i.test(i.title)?'red':/green/i.test(i.title)?'green':'';
 const order={meal:2,chore:0,activity:1,note:1};
 function itemsFor(date){return S.items.filter(i=>i.date===date).sort((a,b)=>{
   const ka=a.start||(a.kind==='meal'?'17:30':a.kind==='chore'?'00:00':'12:00'),kb=b.start||(b.kind==='meal'?'17:30':b.kind==='chore'?'00:00':'12:00');
@@ -165,10 +205,18 @@ function itemHTML(i){
   const time=i.start?`<div class="time">${fmt(i.start)}${i.end?`<span class="to">to ${fmt(i.end)}</span>`:''}</div>`:'<div class="time any"></div>';
   return `${open(i,'item')}${time}<div class="what"><div class="t">${esc(i.title)}</div>${i.note?`<div class="n">${esc(i.note)}</div>`:''}${tags(i)}</div>${shut()}`;}
 function choreHTML(i){const extra=/bin/i.test(i.title)?' · put it out the night before':'';
-  return `${open(i,'chore item')}<div class="what" style="grid-column:1/-1">${esc(i.title)}${extra}</div>${shut()}`;}
+  return `${open(i,'chore item'+(binc(i)?' '+binc(i):''))}<div class="what" style="grid-column:1/-1">${esc(i.title)}${extra}</div>${shut()}`;}
 function dinnerHTML(meals,date){
   if(!meals.length)return `<div class="dinnerrow"><div class="k">Dinner</div><div class="v none">Not planned yet</div></div>`;
   return meals.map(m=>`${open(m,'dinnerrow item')}<div class="k">Dinner</div><div class="v">${esc(m.title)}${m.note?`<div class="n" style="font-family:var(--body);font-size:14px;font-weight:400;color:var(--muted)">${esc(m.note)}</div>`:''}</div>${shut()}`).join('');}
+function dayCard(d,today){const p=parts(d);const its=itemsFor(d);
+    const chores=its.filter(i=>i.kind==='chore'),acts=its.filter(i=>i.kind==='activity'||i.kind==='note'),meals=its.filter(i=>i.kind==='meal');
+    const badge=d===today?'<span class="badge">Today</span>':'';
+    return `<section class="day ${d===today?'is-today':''}" aria-label="${p.dow} ${p.dn} ${p.mo}" aria-live="polite">
+      <div class="dhead"><h3>${p.dow} ${p.dn}</h3><span class="mo">${p.mo}</span>${badge}</div>
+      ${chores.map(choreHTML).join('')}
+      ${acts.length||editing?`<div class="list">${acts.map(itemHTML).join('')}${editing?`<button type="button" class="add" data-add="${d}">+ Add to ${p.dow}</button>`:''}</div>`:'<div class="empty" style="padding:4px 16px 10px">Nothing else on</div>'}
+      ${dinnerHTML(meals,d)}</section>`;}
 function render(){
   const today=bneToday(), D=days(), idx=D.indexOf(today);
   const pre=today<S.tripStart, post=today>S.tripEnd;
@@ -183,21 +231,32 @@ function render(){
       ${nl?`<div class="tile"><div class="k">Next lift</div><div class="v">${esc(nl.who||'')} to ${esc(nl.title)}</div>
         <div class="s">${nl.date===today?'Today':parts(nl.date).dow+' '+parts(nl.date).dn}${nl.start?' · '+fmt(nl.start):''} · <span class="lift ${esc(nl.driver)}">${esc(nl.driver)} drives</span></div></div>`:''}
     </section>`;}
-  const prog=D.map(d=>`<span class="${d<today?'done':d===today?'now':''}"></span>`).join('');
-  const dayHTML=D.map(d=>{const p=parts(d);const its=itemsFor(d);
-    const chores=its.filter(i=>i.kind==='chore'),acts=its.filter(i=>i.kind==='activity'||i.kind==='note'),meals=its.filter(i=>i.kind==='meal');
-    const badge=d===today?'<span class="badge">Today</span>':'';
-    return `<section class="day ${d<today?'past':''} ${d===today?'is-today':''}" aria-label="${p.dow} ${p.dn} ${p.mo}">
-      <div class="dhead"><h3>${p.dow} ${p.dn}</h3><span class="mo">${p.mo}</span>${badge}</div>
-      ${chores.map(choreHTML).join('')}
-      ${acts.length||editing?`<div class="list">${acts.map(itemHTML).join('')}${editing?`<button type="button" class="add" data-add="${d}">+ Add to ${p.dow}</button>`:''}</div>`:'<div style="height:8px"></div>'}
-      ${dinnerHTML(meals,d)}</section>`;}).join('');
+  if(!selected||selected<S.tripStart||selected>S.tripEnd)selected=focus||S.tripStart;
+  // fit the trip into as few rows as possible: grid ends on the last day, starts so rows are full
+  const we=new Date(S.tripEnd+'T00:00:00Z'), ws=new Date(we);ws.setUTCDate(ws.getUTCDate()-(Math.ceil(D.length/7)*7-1));
+  const heads=[...Array(7)].map((_,k)=>DOW[(ws.getUTCDay()+k)%7]);
+  let cells='';
+  for(let c=new Date(ws);c<=we;c.setUTCDate(c.getUTCDate()+1)){const d=c.toISOString().slice(0,10),p=parts(d);
+    if(d<S.tripStart||d>S.tripEnd){cells+=`<div class="cell out" aria-hidden="true"><span class="cn">${p.dn}</span></div>`;continue;}
+    const its=itemsFor(d),meal=its.find(i=>i.kind==='meal');
+    const full=its.filter(i=>i.kind==='chore').map(i=>`<span class="ev bin ${binc(i)}">${esc(i.title)}</span>`).join('')+
+      its.filter(i=>i.kind==='activity'||i.kind==='note').map(i=>`<span class="ev ${esc(i.driver||'')}">${i.start?`<b>${fmt(i.start)}</b>`:''}${i.who?esc(i.who)+' · ':''}${esc(i.title)}${i.driver?`<em>${esc(i.driver)} drives</em>`:''}${i.note?`<em class="nt">${esc(i.note)}</em>`:''}</span>`).join('')+
+      `<span class="cdin ${meal?'':'none'}"><small>Dinner</small>${meal?esc(meal.title):'Not planned'}</span>`;
+    const dots=(meal?'<i class="dot meal"></i>':'')+its.filter(i=>i.kind==='chore').map(i=>`<i class="dot bin ${binc(i)}"></i>`).join('')+
+      its.filter(i=>i.kind==='activity'||i.kind==='note').map(i=>`<i class="dot ${i.driver?esc(i.driver):'act'}"></i>`).join('');
+    cells+=`<button type="button" class="cell ${d<today?'past':''} ${d===today?'today':''} ${d===selected?'sel':''}" data-sel="${d}" aria-pressed="${d===selected}" aria-label="${p.dow} ${p.dn} ${p.mo}">
+      <span class="cn">${p.dn}</span><span class="full">${full}</span><span class="dots">${dots}</span></button>`;}
+  const cal=`<section class="calwrap" aria-label="Calendar"><div class="calhead"><h2>November</h2>
+    <div class="legend"><span><i class="dot meal"></i>Dinner</span><span><i class="dot Nana"></i>Nana drives</span><span><i class="dot Kaleb"></i>Kaleb drives</span><span><i class="dot act"></i>Other plans</span><span><i class="dot bin"></i><i class="dot bin red"></i>Bin day</span></div></div>
+    <div class="cal">${heads.map(w=>`<div class="wd">${w}</div>`).join('')}${cells}</div></section>`;
+  const detail=dayCard(selected,today);
   app.className='wrap'+(editing?' editing':'');
   app.innerHTML=`<header><div class="eyebrow">While Mum &amp; Dad are in Vancouver</div>
     <div class="hrow"><h1>Boys' Home Plan</h1>${canEdit?`<button type="button" class="btn ${editing?'':'ghost'}" id="editBtn">${editing?'Done editing':'Edit plan'}</button>`:''}</div>
-    <p class="sub">${parts(S.tripStart).dn}–${parts(S.tripEnd).dn} Nov · ${status}</p><div class="progress" aria-hidden="true">${prog}</div></header>
+    <p class="sub">${parts(S.tripStart).dn}–${parts(S.tripEnd).dn} Nov · ${status}</p></header>
     ${summary}
-    <div class="days">${dayHTML}</div>
+    ${cal}
+    <div class="detail">${detail}</div>
     ${dirty||msg?`<div class="savebar" role="status"><span>${esc(msg||'Unsaved changes')}</span><span class="spacer"></span>${dirty?'<button type="button" class="btn" id="saveBtn">Save for everyone</button>':''}</div>`:''}
     <p class="foot">${S.updated?'Last updated '+esc(S.updated)+'. ':''}Times are Queensland time.</p>`;
 }
@@ -242,6 +301,7 @@ async function save(){
   render();
 }
 app.addEventListener('click',e=>{
+  const sc=e.target.closest('[data-sel]');if(sc){selected=sc.dataset.sel;render();if(matchMedia('(max-width:759px)').matches)document.querySelector('.detail')?.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'nearest'});return;}
   if(e.target.closest('#editBtn')){editing=!editing;render();return;}
   if(e.target.closest('#saveBtn')){save();return;}
   const a=e.target.closest('[data-add]');if(a){openPanel(null,a.dataset.add);return;}
