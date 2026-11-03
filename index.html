@@ -118,6 +118,7 @@ h1{font-size:clamp(30px,7vw,44px);font-weight:800;letter-spacing:-.01em}
 .ev em{display:block;font-style:normal;font-weight:700;font-size:11px;opacity:.9}
 .ev em.nt{font-weight:400}
 .ev.Nana{background:var(--nana);color:var(--surface)}.ev.Kaleb{background:var(--kaleb);color:var(--surface)}
+.ev.travel{background:var(--accent);color:var(--surface)}
 .ev.bin{background:var(--sun);color:var(--sun-ink);font-weight:700}
 .ev.bin.green,.chore.item.green{background:var(--bin-green);color:var(--bin-green-ink)}
 .ev.bin.red,.chore.item.red{background:var(--bin-red);color:#fff}.dot.bin.red{background:var(--bin-red)}
@@ -146,8 +147,10 @@ h1{font-size:clamp(30px,7vw,44px);font-weight:800;letter-spacing:-.01em}
 @media (prefers-reduced-motion:no-preference){.chip,.btn,.item{transition:background .15s}}
 </style>
 <div id="app" class="wrap"></div>
-<script type="application/json" id="state">{"tripStart":"2026-11-05","tripEnd":"2026-11-16","updated":"","items":[
-{"id":"m0a","date":"2026-11-05","kind":"meal","title":"Meatballs"},
+<script type="application/json" id="state">{"tripStart":"2026-11-05","tripEnd":"2026-11-17","updated":"","items":[
+{"id":"f1","date":"2026-11-05","kind":"travel","title":"Mum & Dad fly out","start":"10:30","note":"Air Canada AC 36"},
+{"id":"f2","date":"2026-11-17","kind":"travel","title":"Mum & Dad land","start":"08:45","note":"Air Canada AC 35"},
+{"id":"m0a","date":"2026-11-05","kind":"meal","title":"Pizza night"},
 {"id":"a0","date":"2026-11-06","kind":"activity","title":"Youth","who":"Both boys"},
 {"id":"a0b","date":"2026-11-13","kind":"activity","title":"Youth","who":"Kaleb"},
 {"id":"m0b","date":"2026-11-06","kind":"meal","title":"Takeout after youth","start":"20:00"},
@@ -165,13 +168,13 @@ h1{font-size:clamp(30px,7vw,44px);font-weight:800;letter-spacing:-.01em}
 {"id":"m7","date":"2026-11-15","kind":"meal","title":"Takeout"},
 {"id":"a6","date":"2026-11-15","kind":"activity","title":"Bytes","who":"Judah","driver":"Kaleb","start":"17:00","end":"20:30"},
 {"id":"m8","date":"2026-11-16","kind":"meal","title":"Lasagne"},
-{"id":"m0c","date":"2026-11-07","kind":"meal","title":"Pizza night"},
+{"id":"m0c","date":"2026-11-07","kind":"meal","title":"Meatballs"},
 {"id":"a7","date":"2026-11-07","kind":"activity","title":"Work","who":"Judah","driver":"Nana","start":"12:00","note":"Bus home afterwards"},
 {"id":"c2","date":"2026-11-06","kind":"chore","title":"Red bin day"},
 {"id":"c3","date":"2026-11-13","kind":"chore","title":"Yellow bin day"},
 {"id":"c4","date":"2026-11-13","kind":"chore","title":"Red bin day"},
 {"id":"a8","date":"2026-11-08","kind":"activity","title":"Gym","who":"Judah","driver":"Kaleb","start":"07:00"},
-{"id":"a9","date":"2026-11-08","kind":"activity","title":"Bytes","who":"Judah","start":"09:30","note":"Walks over from the gym"}
+{"id":"a9","date":"2026-11-08","kind":"activity","title":"Bytes","who":"Judah","driver":"Kaleb","start":"09:30","note":"Walks over from the gym · Kaleb picks him up"}
 ]}</script>
 <script id="appjs">
 (function(){
@@ -191,7 +194,7 @@ function days(){const out=[];let d=new Date(S.tripStart+'T00:00:00Z');const e=ne
 function parts(iso){const d=new Date(iso+'T00:00:00Z');return{dow:DOW[d.getUTCDay()],dn:d.getUTCDate(),mo:MON[d.getUTCMonth()]};}
 function fmt(t){if(!t)return'';let[h,m]=t.split(':').map(Number);const ap=h>=12?'pm':'am';h=h%12||12;return h+(m?':'+String(m).padStart(2,'0'):'')+ap;}
 const binc=i=>/red/i.test(i.title)?'red':/green/i.test(i.title)?'green':'';
-const order={meal:2,chore:0,activity:1,note:1};
+const order={meal:2,chore:0,activity:1,note:1,travel:1};
 function itemsFor(date){return S.items.filter(i=>i.date===date).sort((a,b)=>{
   const ka=a.start||(a.kind==='meal'?'17:30':a.kind==='chore'?'00:00':'12:00'),kb=b.start||(b.kind==='meal'?'17:30':b.kind==='chore'?'00:00':'12:00');
   return ka<kb?-1:ka>kb?1:order[a.kind]-order[b.kind];});}
@@ -210,7 +213,7 @@ function dinnerHTML(meals,date){
   if(!meals.length)return `<div class="dinnerrow"><div class="k">Dinner</div><div class="v none">Not planned yet</div></div>`;
   return meals.map(m=>`${open(m,'dinnerrow item')}<div class="k">Dinner</div><div class="v">${esc(m.title)}${m.note?`<div class="n" style="font-family:var(--body);font-size:14px;font-weight:400;color:var(--muted)">${esc(m.note)}</div>`:''}</div>${shut()}`).join('');}
 function dayCard(d,today){const p=parts(d);const its=itemsFor(d);
-    const chores=its.filter(i=>i.kind==='chore'),acts=its.filter(i=>i.kind==='activity'||i.kind==='note'),meals=its.filter(i=>i.kind==='meal');
+    const chores=its.filter(i=>i.kind==='chore'),acts=its.filter(i=>i.kind==='activity'||i.kind==='note'||i.kind==='travel'),meals=its.filter(i=>i.kind==='meal');
     const badge=d===today?'<span class="badge">Today</span>':'';
     return `<section class="day ${d===today?'is-today':''}" aria-label="${p.dow} ${p.dn} ${p.mo}" aria-live="polite">
       <div class="dhead"><h3>${p.dow} ${p.dn}</h3><span class="mo">${p.mo}</span>${badge}</div>
@@ -240,10 +243,10 @@ function render(){
     if(d<S.tripStart||d>S.tripEnd){cells+=`<div class="cell out" aria-hidden="true"><span class="cn">${p.dn}</span></div>`;continue;}
     const its=itemsFor(d),meal=its.find(i=>i.kind==='meal');
     const full=its.filter(i=>i.kind==='chore').map(i=>`<span class="ev bin ${binc(i)}">${esc(i.title)}</span>`).join('')+
-      its.filter(i=>i.kind==='activity'||i.kind==='note').map(i=>`<span class="ev ${esc(i.driver||'')}">${i.start?`<b>${fmt(i.start)}</b>`:''}${i.who?esc(i.who)+' · ':''}${esc(i.title)}${i.driver?`<em>${esc(i.driver)} drives</em>`:''}${i.note?`<em class="nt">${esc(i.note)}</em>`:''}</span>`).join('')+
+      its.filter(i=>i.kind==='activity'||i.kind==='note'||i.kind==='travel').map(i=>`<span class="ev ${esc(i.driver||'')} ${i.kind==='travel'?'travel':''}">${i.start?`<b>${fmt(i.start)}</b>`:''}${i.who?esc(i.who)+' · ':''}${esc(i.title)}${i.driver?`<em>${esc(i.driver)} drives</em>`:''}${i.note?`<em class="nt">${esc(i.note)}</em>`:''}</span>`).join('')+
       `<span class="cdin ${meal?'':'none'}"><small>Dinner</small>${meal?esc(meal.title):'Not planned'}</span>`;
     const dots=(meal?'<i class="dot meal"></i>':'')+its.filter(i=>i.kind==='chore').map(i=>`<i class="dot bin ${binc(i)}"></i>`).join('')+
-      its.filter(i=>i.kind==='activity'||i.kind==='note').map(i=>`<i class="dot ${i.driver?esc(i.driver):'act'}"></i>`).join('');
+      its.filter(i=>i.kind==='activity'||i.kind==='note'||i.kind==='travel').map(i=>`<i class="dot ${i.driver?esc(i.driver):'act'}"></i>`).join('');
     cells+=`<button type="button" class="cell ${d<today?'past':''} ${d===today?'today':''} ${d===selected?'sel':''}" data-sel="${d}" aria-pressed="${d===selected}" aria-label="${p.dow} ${p.dn} ${p.mo}">
       <span class="cn">${p.dn}</span><span class="full">${full}</span><span class="dots">${dots}</span></button>`;}
   const cal=`<section class="calwrap" aria-label="Calendar"><div class="calhead"><h2>November</h2>
@@ -266,7 +269,7 @@ function openPanel(item,date){
   const opt=(v,cur,l)=>`<option value="${v}"${v===(cur||'')?' selected':''}>${l||v||'—'}</option>`;
   panel.innerHTML=`<form id="itemForm"><h3>${item?'Edit':'Add'} item</h3>
     <label>Day<select id="f-date">${days().map(d=>{const p=parts(d);return opt(d,it.date,`${p.dow} ${p.dn} ${p.mo}`)}).join('')}</select></label>
-    <label>Type<select id="f-kind">${opt('meal',it.kind,'Dinner')}${opt('activity',it.kind,'Activity')}${opt('chore',it.kind,'Chore')}</select></label>
+    <label>Type<select id="f-kind">${opt('meal',it.kind,'Dinner')}${opt('activity',it.kind,'Activity')}${opt('chore',it.kind,'Chore')}${opt('travel',it.kind,'Flight')}</select></label>
     <label class="full">What<input id="f-title" required value="${esc(it.title)}" placeholder="e.g. Bytes"></label>
     <label>Start<input id="f-start" type="time" value="${esc(it.start||'')}"></label>
     <label>End<input id="f-end" type="time" value="${esc(it.end||'')}"></label>
