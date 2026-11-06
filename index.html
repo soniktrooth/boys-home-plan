@@ -18,6 +18,7 @@
   --accent:#0f6b5c; --accent-soft:#dcefe9; --sun:#f5c94a; --sun-ink:#4a3a00;
   --nana:#8a3f8f; --nana-soft:#f3e4f4; --kaleb:#1f5fa8; --kaleb-soft:#e1ecf9;
   --judah:#b4561c; --judah-soft:#fbe9dc;
+  --fiona:#5e7a1f; --fiona-soft:#ebf2da;
   --bin-green:#7cb342; --bin-green-ink:#1b2e05; --bin-red:#c62828;
   --display:"Bricolage Grotesque", "Avenir Next", system-ui, sans-serif;
   --body:"Atkinson Hyperlegible", system-ui, -apple-system, sans-serif;
@@ -26,12 +27,12 @@
   --bg:#0f1716; --surface:#172220; --ink:#e4eeeb; --muted:#9bb0ab; --line:#2a3a37;
   --accent:#5cc5ae; --accent-soft:#1b3631; --sun:#e8bd3f; --sun-ink:#2a2000;
   --nana:#e0a3e4; --nana-soft:#352339; --kaleb:#8dbaf0; --kaleb-soft:#1c2c42;
-  --judah:#f2a36d; --judah-soft:#3a271a; color-scheme:dark}}
+  --judah:#f2a36d; --judah-soft:#3a271a; --fiona:#b5cf6e; --fiona-soft:#28311a; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0f1716; --surface:#172220; --ink:#e4eeeb; --muted:#9bb0ab; --line:#2a3a37;
   --accent:#5cc5ae; --accent-soft:#1b3631; --sun:#e8bd3f; --sun-ink:#2a2000;
   --nana:#e0a3e4; --nana-soft:#352339; --kaleb:#8dbaf0; --kaleb-soft:#1c2c42;
-  --judah:#f2a36d; --judah-soft:#3a271a; color-scheme:dark}
+  --judah:#f2a36d; --judah-soft:#3a271a; --fiona:#b5cf6e; --fiona-soft:#28311a; color-scheme:dark}
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 48px}
@@ -88,6 +89,7 @@ h1{font-size:clamp(30px,7vw,44px);font-weight:800;letter-spacing:-.01em}
 .lift{font-size:12px;font-weight:700;border-radius:6px;padding:2px 8px;color:var(--surface);background:var(--ink)}
 .lift.Nana{background:var(--nana)}
 .lift.Kaleb{background:var(--kaleb)}
+.lift.Fiona{background:var(--fiona)}
 .dinnerrow{display:grid;grid-template-columns:76px 1fr;gap:12px;align-items:baseline;padding:10px 16px;background:var(--accent-soft);margin-top:auto}
 .dinnerrow .k{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
 .dinnerrow .v{font-family:var(--display);font-size:20px;font-weight:700;color:var(--ink);line-height:1.2}
@@ -117,7 +119,7 @@ h1{font-size:clamp(30px,7vw,44px);font-weight:800;letter-spacing:-.01em}
 .ev b{display:block;font-variant-numeric:tabular-nums}
 .ev em{display:block;font-style:normal;font-weight:700;font-size:11px;opacity:.9}
 .ev em.nt{font-weight:400}
-.ev.Nana{background:var(--nana);color:var(--surface)}.ev.Kaleb{background:var(--kaleb);color:var(--surface)}
+.ev.Nana{background:var(--nana);color:var(--surface)}.ev.Fiona{background:var(--fiona);color:var(--surface)}.dot.Fiona{background:var(--fiona)}.ev.Kaleb{background:var(--kaleb);color:var(--surface)}
 .ev.travel{background:var(--accent);color:var(--surface)}
 .ev.bin{background:var(--sun);color:var(--sun-ink);font-weight:700}
 .ev.bin.green,.chore.item.green{background:var(--bin-green);color:var(--bin-green-ink)}
@@ -164,12 +166,15 @@ h1{font-size:clamp(30px,7vw,44px);font-weight:800;letter-spacing:-.01em}
 {"id":"m5","date":"2026-11-13","kind":"meal","title":"Takeout"},
 {"id":"a4","date":"2026-11-13","kind":"activity","title":"Bytes","who":"Judah","driver":"Nana","start":"18:30","end":"21:00"},
 {"id":"m6","date":"2026-11-14","kind":"meal","title":"Thai curry & rice"},
-{"id":"a5","date":"2026-11-14","kind":"activity","title":"Bytes","who":"Judah","driver":"Kaleb","start":"15:00","end":"21:30"},
+{"id":"a5","date":"2026-11-14","kind":"activity","title":"Bytes","who":"Judah","driver":"Fiona","start":"15:00","end":"21:30"},
+{"id":"a12","date":"2026-11-14","kind":"activity","title":"Pick up from Bytes","who":"Judah","driver":"Kaleb","start":"21:30"},
 {"id":"m7","date":"2026-11-15","kind":"meal","title":"Takeout"},
 {"id":"a6","date":"2026-11-15","kind":"activity","title":"Bytes","who":"Judah","driver":"Kaleb","start":"17:00","end":"20:30"},
+{"id":"a10","date":"2026-11-07","kind":"activity","title":"Pick up from work","who":"Judah","driver":"Kaleb","start":"18:00"},
+{"id":"c5","date":"2026-11-08","kind":"chore","title":"Get meals out"},
 {"id":"m8","date":"2026-11-16","kind":"meal","title":"Lasagne"},
 {"id":"m0c","date":"2026-11-07","kind":"meal","title":"Meatballs"},
-{"id":"a7","date":"2026-11-07","kind":"activity","title":"Work","who":"Judah","driver":"Nana","start":"12:00","note":"Bus home afterwards"},
+{"id":"a7","date":"2026-11-07","kind":"activity","title":"Work","who":"Judah","driver":"Nana","start":"12:00"},
 {"id":"c2","date":"2026-11-06","kind":"chore","title":"Red bin day"},
 {"id":"c3","date":"2026-11-13","kind":"chore","title":"Yellow bin day"},
 {"id":"c4","date":"2026-11-13","kind":"chore","title":"Red bin day"},
@@ -250,7 +255,7 @@ function render(){
     cells+=`<button type="button" class="cell ${d<today?'past':''} ${d===today?'today':''} ${d===selected?'sel':''}" data-sel="${d}" aria-pressed="${d===selected}" aria-label="${p.dow} ${p.dn} ${p.mo}">
       <span class="cn">${p.dn}</span><span class="full">${full}</span><span class="dots">${dots}</span></button>`;}
   const cal=`<section class="calwrap" aria-label="Calendar"><div class="calhead"><h2>November</h2>
-    <div class="legend"><span><i class="dot meal"></i>Dinner</span><span><i class="dot Nana"></i>Nana drives</span><span><i class="dot Kaleb"></i>Kaleb drives</span><span><i class="dot act"></i>Other plans</span><span><i class="dot bin"></i><i class="dot bin red"></i>Bin day</span></div></div>
+    <div class="legend"><span><i class="dot meal"></i>Dinner</span><span><i class="dot Nana"></i>Nana drives</span><span><i class="dot Kaleb"></i>Kaleb drives</span><span><i class="dot Fiona"></i>Fiona drives</span><span><i class="dot act"></i>Other plans</span><span><i class="dot bin"></i><i class="dot bin red"></i>Bin day</span></div></div>
     <div class="cal">${heads.map(w=>`<div class="wd">${w}</div>`).join('')}${cells}</div></section>`;
   const detail=dayCard(selected,today);
   app.className='wrap'+(editing?' editing':'');
@@ -274,7 +279,7 @@ function openPanel(item,date){
     <label>Start<input id="f-start" type="time" value="${esc(it.start||'')}"></label>
     <label>End<input id="f-end" type="time" value="${esc(it.end||'')}"></label>
     <label>Who<select id="f-who">${['','Judah','Kaleb','Both boys'].map(v=>opt(v,it.who)).join('')}</select></label>
-    <label>Driver<select id="f-driver">${['','Nana','Kaleb'].map(v=>opt(v,it.driver)).join('')}</select></label>
+    <label>Driver<select id="f-driver">${['','Nana','Kaleb','Fiona'].map(v=>opt(v,it.driver)).join('')}</select></label>
     <label class="full">Note<input id="f-note" value="${esc(it.note||'')}"></label>
     <div class="row"><button class="btn" type="submit">Apply</button><button class="btn ghost" type="button" id="f-cancel">Cancel</button>
     ${item?'<span class="spacer"></span><button class="btn danger" type="button" id="f-del">Delete</button>':''}</div></form>`;
